@@ -1,23 +1,24 @@
 ---
-- name: Helpdesk-Prod admin 
+- name: Helpdesk Admin Deployment
   hosts: helpdesk-app
   gather_facts: false
   tasks:
-    - name: git pull admin
+    - name: Reset Commit
+      shell: git reset --hard
+      args:
+        chdir: /root/Prod/helpdesk-admin/
+    - name: Clone the Github Repo
       shell: git pull
       args:
         chdir: /root/Prod/helpdesk-admin/
-
-    - name: install dependencies 
+        
+    - name: Install Node Modules
       shell: yarn install
       args:
         chdir: /root/Prod/helpdesk-admin/
-  
-    - name: build projects
+    - name: Create Build
       shell: yarn build
-      
-    - name: Pm2 restart
-      shell: pm2 restart helpdesk-admin-dev
       args:
         chdir: /root/Prod/helpdesk-admin/
-  
+    - name: Restart the Site
+      shell: pm2 restart helpdesk-admin-dev
