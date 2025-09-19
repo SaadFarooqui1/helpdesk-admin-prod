@@ -1,0 +1,23 @@
+---
+- name: Helpdesk-Prod admin 
+  hosts: helpdesk-app
+  gather_facts: false
+  tasks:
+    - name: git pull admin
+      shell: git pull
+      args:
+        chdir: /root/Prod/helpdesk-admin/
+
+    - name: install dependencies 
+      shell: yarn install
+      args:
+        chdir: /root/Prod/helpdesk-admin/
+  
+    - name: build projects
+      shell: yarn build
+      
+    - name: Pm2 restart
+      shell: pm2 restart helpdesk-admin-dev
+      args:
+        chdir: /root/Prod/helpdesk-admin/
+  
