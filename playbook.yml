@@ -21,4 +21,4 @@
       args:
         chdir: /root/Prod/helpdesk-admin/
     - name: Restart the Site
-      shell: pm2 restart helpdesk-admin-dev
+      shell: pm2 restart admin-prod
